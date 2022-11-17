@@ -1,0 +1,22 @@
+{% extends '../home.html' %}
+
+{% block container %}
+
+    <h2>Detalhes</h2>
+
+    <ul>
+        <li><b>Título: </b>{{object.title}}</li>
+        <li><b>Resenha: </b>{{object.review}}</li>
+        <li><b>Tipo: </b>{{object.type}}</li>
+        {% if object.status %}
+            <li><b>Status: </b>Finalizado</li>        
+        {% else %}
+            <li><b>Status: </b>Em curso</li>        
+        {% endif %}
+        <li><b>Data de início: </b>{{object.start_date}}</li>
+        {% if object.status %}
+            <li><b>Data de finalização: </b>{{object.end_date}}</li>
+        {% endif%}
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block container %}
+    <h1>Meu perfil</h1>
+    <h6>Meus dados</h6>
+    <ul>
+        <li><b>Nome:</b> {{ user.name }}</li>
+        <li><b>E-mail:</b> {{ user.email }}</li>
+        <li><b>Status:</b> 
+            {% if user.is_active %}
+                Ativo
+            {% else %}
+                Inativo
+            {% endif %}
+        </li>
+    </ul>
+    <a href="{% url 'accounts:update_user' %}">
+        <button type="button" class="btn btn-primary">Editar meus dados</button>
+    </a>
+    <a href="{% url 'accounts:delete_user' %}">
+        <button type="button" class="btn btn-danger">Excluir meu perfil</button>
+    </a>
+{% endblock %}

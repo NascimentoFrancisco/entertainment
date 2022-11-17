@@ -1,0 +1,23 @@
+{% extends '../home.html' %}
+{% load crispy_forms_tags %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="page-header">
+            <h1>Apagar</h1>
+        </div>
+        <form action="" method="POST">
+            <p>você realmente deseja apagar <b>{{ object }}</b> de sua lista?</p>
+            <p class="text-danger">OBS: Ao apagar esse entretenimento de sua lista ele será eliminado de uma vez por todas do sistema sendo assim impossível recuperá-lo novamente.</p>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            
+            <a href="{% url 'entertainment:home_entertainment' %}"> 
+                <button type="button" class="btn btn-outline-danger">Cancelar</button>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

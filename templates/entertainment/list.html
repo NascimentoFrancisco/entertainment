@@ -1,0 +1,63 @@
+{% extends '../home.html' %}
+{% load static %}
+{% block container %}
+<table class="table table-striped">
+    <th><h1>Lista de entretenimentos</h1></th>
+    <th>
+      <a href="{% url 'entertainment:create_entertainment' %}" class="text-primary">
+        <button type="button" class="btn btn-success">Adicionar</button>
+      </a>
+    </th>
+  </table>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Status</th>
+            <th cope="col">Período</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for entertainment in object_list %}
+          <tr>
+            <td>
+              <a href="{% url 'entertainment:detail_entertainment' entertainment.id %}">
+                <p class="text-dark">{{ entertainment.title }}</p>
+              </a>
+            </td>
+            <td>{{ entertainment.type }}</td>
+            <td>
+                {% if entertainment.status %}
+                    <p class="text-success"><b>Finalizado</b></p>
+                {% else %}
+                    <a href="{% url 'entertainment:finish_entertainment' entertainment.id %}">
+                      <button type="button" class="btn btn-outline-primary">Finalizar</button>
+                    </a>
+                {% endif %}
+            </td>
+            <td>
+                {% if entertainment.status %}
+                    De {{entertainment.start_date|date:"d/m/Y" }} a {{entertainment.end_date|date:"d/m/Y" }}.
+                {% else %}
+                    De {{entertainment.start_date|date:"d/m/Y" }} até agora.
+                {% endif %}
+            </td>
+            <td>
+                <div class="d-flex justify-content-around">
+                  <a href="{% url 'entertainment:update_entertainment' entertainment.id %}" data-toggle="tooltip" data-placement="top" title="Editar"> 
+                      <img src="{% static 'images/pencil-square.svg'%}" width="20" height="20" alt="edit">
+                  </a>
+                
+                  <a href="{% url 'entertainment:delete_entertainment' entertainment.id %}" data-toggle="tooltip" data-placement="top" title="Apagar">
+                      <img src="{% static 'images/trash-fill.svg'%}" width="20" height="20" alt="edit">
+                  </a>
+                </div>
+                
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}
