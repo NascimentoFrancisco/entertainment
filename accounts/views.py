@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
         CreateView, UpdateView, DeleteView, View
@@ -47,6 +49,18 @@ class CreateUser(CreateView):
         messages.success(
             self.request,'Cadastro realizado com sucesso! Faça seu login.'
         )
+        
+        name = form.data['name'] 
+        to_email = form.data['email'] 
+
+        send_mail('saveEntertainments',
+            f"""Olá {name}, seja bem vindo em nosso sistema!\n
+            Seu cadastro foi realizado com suceso no saveEntertainments!\n
+            Agora é só aproveitar dos serviços disponíveis na plataforma.
+            """,
+            settings.EMAIL_HOST_USER,[to_email]
+        )
+        
         return super().form_valid(form)
 
 class UpdateUser(LoginRequiredMixin, UpdateView):
